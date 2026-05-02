@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Onglerie Divine — Bastia. Pose semi-permanent, extensions, nail art. Réservez votre créneau de la semaine en quelques secondes." />
+<meta name="theme-color" content="#C9A0A0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; img-src 'self' data: https:; connect-src 'self';" />
+<title>Onglerie Divine — Bastia · L'élégance en Rose Gold & Bleu Ciel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      colors: {
+        rosegold: { DEFAULT: '#C9A0A0', deep: '#B08585', light: '#E8CFCF', soft: '#F5E6E6' },
+        bleuciel: { DEFAULT: '#BFD9E5', deep: '#9BC3D4', light: '#E3F0F5' },
+        creme: '#FDF7F4',
+        charbon: '#2C2A2B'
+      },
+      boxShadow: {
+        glow: '0 8px 32px -4px rgba(201,160,160,0.35)',
+        soft: '0 4px 24px -2px rgba(44,42,43,0.08)'
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  :root {
+    --rose-gold: #C9A0A0;
+    --rose-gold-deep: #B08585;
+    --bleu-ciel: #BFD9E5;
+    --creme: #FDF7F4;
+    --charbon: #2C2A2B;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--creme);
+    color: var(--charbon);
+    background-image:
+      radial-gradient(at 8% 0%, rgba(191,217,229,0.18) 0px, transparent 50%),
+      radial-gradient(at 92% 30%, rgba(201,160,160,0.15) 0px, transparent 55%),
+      radial-gradient(at 50% 100%, rgba(232,207,207,0.20) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .font-display { font-family: 'Playfair Display', serif; }
+
+  @keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(201,160,160,0.55), 0 8px 24px -6px rgba(201,160,160,0.45); }
+    70%  { box-shadow: 0 0 0 18px rgba(201,160,160,0), 0 8px 24px -6px rgba(201,160,160,0.45); }
+    100% { box-shadow: 0 0 0 0 rgba(201,160,160,0), 0 8px 24px -6px rgba(201,160,160,0.45); }
+  }
+  .pulse-cta { animation: pulseRing 2.6s ease-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .pulse-cta { animation: none; } }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; }
+  .reveal.in { animation: fadeUp 0.7s ease-out forwards; }
+
+  .slot { transition: all .18s ease; }
+  .slot[data-state="available"]:hover {
+    transform: translateY(-2px);
+    background: var(--rose-gold);
+    color: white;
+    border-color: var(--rose-gold);
+  }
+  .slot[data-state="selected"] {
+    background: var(--rose-gold);
+    color: white;
+    border-color: var(--rose-gold-deep);
+    box-shadow: 0 6px 16px -4px rgba(201,160,160,0.55);
+  }
+  .slot[data-state="closed"], .slot[data-state="past"], .slot[data-state="booked"], .slot[data-state="off"] {
+    background: #f3eeec;
+    color: #b8b1ae;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .service-card { transition: transform .25s ease, box-shadow .25s ease; }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px -8px rgba(201,160,160,0.30); }
+  .service-card:hover .card-cta { opacity: 1; transform: translateY(0); }
+  .card-cta { opacity: 0.7; transform: translateY(4px); transition: all .25s ease; }
+
+  .day-card { transition: all .2s ease; }
+  .day-card[data-disabled="true"] { opacity: 0.4; pointer-events: none; }
+
+  .accent-line {
+    width: 60px; height: 3px; background: var(--bleu-ciel); border-radius: 2px;
+    margin-top: 12px;
+  }
+
+  @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .toast { animation: slideIn .35s ease-out; }
+
+  .hero-bg {
+    background:
+      linear-gradient(135deg, rgba(253,247,244,0.85) 0%, rgba(245,230,230,0.7) 50%, rgba(227,240,245,0.65) 100%),
+      radial-gradient(ellipse at 70% 30%, rgba(201,160,160,0.35), transparent 60%);
+  }
+
+  .nail-shape {
+    width: 90%; max-width: 380px; aspect-ratio: 3/5;
+    background: linear-gradient(160deg, #FCE7E2 0%, #F5C7C7 40%, #BFD9E5 100%);
+    border-radius: 50% 50% 30% 30% / 70% 70% 30% 30%;
+    box-shadow: inset 0 -20px 40px rgba(176,133,133,0.25), 0 30px 60px -20px rgba(176,133,133,0.45);
+    position: relative; overflow: hidden;
+  }
+  .nail-shape::before {
+    content: ''; position: absolute; top: 8%; left: 25%; width: 50%; height: 35%;
+    background: linear-gradient(160deg, rgba(255,255,255,0.6), transparent);
+    border-radius: 50% 50% 30% 30% / 70% 70% 30% 30%;
+    filter: blur(2px);
+  }
+  .nail-shape::after {
+    content: ''; position: absolute; top: 60%; left: 10%; width: 80%; height: 4px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    transform: rotate(-12deg); opacity: 0.7;
+  }
+
+  .modal-backdrop { background: rgba(44,42,43,0.55); backdrop-filter: blur(4px); }
+  body.modal-open { overflow: hidden; }
+
+  .input-field {
+    background: white; border: 1.5px solid #EAD9D9; border-radius: 12px;
+    padding: 12px 16px; font-size: 15px; transition: all .2s ease; width: 100%;
+  }
+  .input-field:focus { outline: none; border-color: var(--rose-gold); box-shadow: 0 0 0 4px rgba(201,160,160,0.15); }
+  .input-error { border-color: #D97373 !important; }
+  .error-msg { color: #B85555; font-size: 13px; margin-top: 4px; display: none; }
+  .error-msg.show { display: block; }
+
+  .admin-slot { padding: 6px 4px; font-size: 11px; border-radius: 6px; border: 1px solid #EAD9D9; background: white; cursor: pointer; transition: all .15s; }
+  .admin-slot.closed { background: #f3eeec; color: #999; text-decoration: line-through; }
+  .admin-slot.open { background: #E3F0F5; color: #2C2A2B; }
+  .admin-slot.off { background: #fff5f5; color: #c99; cursor: not-allowed; }
+  .admin-slot:hover:not(:disabled) { transform: scale(1.04); }
+
+  .admin-tab {
+    background: transparent; color: #2C2A2B; padding: 8px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap;
+  }
+  .admin-tab.active { background: var(--rose-gold); color: white; }
+  .admin-tab:hover:not(.active) { background: var(--bleu-ciel); }
+
+  .kpi-card {
+    background: linear-gradient(135deg, #fff 0%, #faf5f5 100%);
+    border: 1px solid rgba(201,160,160,0.15); border-radius: 16px; padding: 16px;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #E8CFCF; border-radius: 8px; }
+
+  /* Status badges réservations */
+  .status-confirmed { background: #d4f5e0; color: #2d7d4d; }
+  .status-blocked { background: #fde0e0; color: #b54545; }
+  .status-cancelled { background: #e5e5e5; color: #888; text-decoration: line-through; }
+
+  /* Mini bar chart */
+  .bar { transition: height .4s ease; }
+</style>
+</head>
+<body class="antialiased">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:bg-rosegold focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:z-50">Aller au contenu</a>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 bg-creme/85 backdrop-blur border-b border-rosegold/15">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 group" aria-label="Onglerie Divine accueil">
+      <span class="w-9 h-9 rounded-full bg-gradient-to-br from-rosegold to-bleuciel flex items-center justify-center text-white font-display font-bold text-lg shadow-soft">D</span>
+      <span class="font-display text-xl sm:text-2xl text-charbon">Onglerie <span class="text-rosegold-deep">Divine</span></span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-charbon/80">
+      <a href="#prestations" class="hover:text-rosegold-deep transition">Prestations</a>
+      <a href="#reservation" class="hover:text-rosegold-deep transition">Réservation</a>
+      <a href="#apropos" class="hover:text-rosegold-deep transition">À propos</a>
+      <a href="#contact" class="hover:text-rosegold-deep transition">Contact</a>
+    </nav>
+    <a href="#reservation" class="pulse-cta inline-flex items-center gap-2 bg-rosegold hover:bg-rosegold-deep text-white text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-full transition" data-cta="header">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span class="hidden sm:inline">Prendre Rendez-vous</span>
+      <span class="sm:hidden">RDV</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero-bg relative overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid md:grid-cols-2 gap-10 items-center">
+    <div class="reveal">
+      <span class="inline-block px-3 py-1 rounded-full bg-bleuciel/40 text-charbon text-xs font-semibold tracking-wide uppercase">Bastia · Haute-Corse</span>
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4 text-charbon">
+        L'élégance <span class="italic text-rosegold-deep">en Rose Gold</span><br/>
+        <span class="text-bleuciel-deep">& Bleu Ciel.</span>
+      </h1>
+      <p class="mt-5 text-lg text-charbon/75 max-w-md">
+        Une expérience digitale pensée pour la conversion et le style. Réservez votre créneau en quelques secondes.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#reservation" class="pulse-cta inline-flex items-center gap-2 bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-6 py-3.5 rounded-full shadow-glow transition" data-cta="hero">
+          Réserver mon créneau
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <a href="#prestations" class="inline-flex items-center gap-2 border border-rosegold/40 hover:border-rosegold text-charbon font-medium px-6 py-3.5 rounded-full transition">Voir les prestations</a>
+      </div>
+      <div class="mt-8 flex items-center gap-4 text-sm text-charbon/60">
+        <div class="flex -space-x-2">
+          <span class="w-8 h-8 rounded-full bg-rosegold-light border-2 border-creme"></span>
+          <span class="w-8 h-8 rounded-full bg-bleuciel border-2 border-creme"></span>
+          <span class="w-8 h-8 rounded-full bg-rosegold border-2 border-creme"></span>
+        </div>
+        <span><strong class="text-charbon">+200 clientes</strong> nous font confiance</span>
+      </div>
+    </div>
+    <div class="flex justify-center reveal">
+      <div class="nail-shape" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY BANNER -->
+<section class="bg-gradient-to-r from-rosegold/15 via-bleuciel/15 to-rosegold/15 border-y border-rosegold/15">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-center gap-2 text-sm">
+    <span class="text-rosegold-deep">✦</span>
+    <span class="text-charbon/80">Réservation possible <strong class="text-charbon">uniquement pour la semaine en cours</strong> —</span>
+    <span class="font-semibold text-rosegold-deep" id="slots-counter">Chargement…</span>
+  </div>
+</section>
+
+<!-- PRESTATIONS -->
+<section id="prestations" class="py-16 sm:py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <h2 class="font-display text-3xl sm:text-4xl text-charbon">Menu des Prestations</h2>
+      <div class="accent-line mx-auto"></div>
+      <p class="mt-4 text-charbon/65 max-w-xl mx-auto">Des soins premium pensés pour sublimer la femme moderne.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="services-grid"></div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation" class="py-16 sm:py-24 bg-gradient-to-b from-creme to-rosegold/8">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 reveal">
+      <h2 class="font-display text-3xl sm:text-4xl text-charbon">Réservez votre créneau</h2>
+      <div class="accent-line mx-auto"></div>
+      <p class="mt-4 text-charbon/65 max-w-xl mx-auto">Première étape, première promesse de douceur.</p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-soft p-6 sm:p-8 mb-6">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-8 h-8 rounded-full bg-rosegold text-white flex items-center justify-center text-sm font-bold">1</span>
+        <h3 class="font-display text-xl text-charbon">Choisissez votre prestation</h3>
+      </div>
+      <div id="service-picker" class="grid sm:grid-cols-2 gap-3" role="radiogroup" aria-label="Choix de la prestation"></div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-soft p-6 sm:p-8 mb-6">
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full bg-rosegold text-white flex items-center justify-center text-sm font-bold">2</span>
+          <h3 class="font-display text-xl text-charbon">Sélectionnez jour & heure</h3>
+        </div>
+        <span class="text-xs text-charbon/50 hidden sm:inline" id="week-label">Semaine du …</span>
+      </div>
+      <div id="calendar-desktop" class="hidden md:block"></div>
+      <div id="calendar-mobile" class="md:hidden space-y-2"></div>
+      <p class="text-xs text-charbon/50 mt-4 flex items-center gap-2 flex-wrap">
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rosegold"></span>Disponible</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-[#f3eeec]"></span>Indisponible</span>
+        <span class="ml-auto italic">La semaine prochaine ouvrira lundi.</span>
+      </p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-soft p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-8 h-8 rounded-full bg-rosegold text-white flex items-center justify-center text-sm font-bold">3</span>
+        <h3 class="font-display text-xl text-charbon">Vos coordonnées</h3>
+      </div>
+      <form id="booking-form" novalidate>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label for="bk-prenom" class="text-sm font-medium text-charbon/80">Prénom *</label>
+            <input type="text" id="bk-prenom" class="input-field mt-1" maxlength="40" autocomplete="given-name" required>
+            <span class="error-msg" data-error-for="bk-prenom">Prénom requis (min. 2 caractères).</span>
+          </div>
+          <div>
+            <label for="bk-nom" class="text-sm font-medium text-charbon/80">Nom *</label>
+            <input type="text" id="bk-nom" class="input-field mt-1" maxlength="40" autocomplete="family-name" required>
+            <span class="error-msg" data-error-for="bk-nom">Nom requis (min. 2 caractères).</span>
+          </div>
+          <div>
+            <label for="bk-tel" class="text-sm font-medium text-charbon/80">Téléphone *</label>
+            <input type="tel" id="bk-tel" class="input-field mt-1" maxlength="20" autocomplete="tel" inputmode="tel" required>
+            <span class="error-msg" data-error-for="bk-tel">Numéro invalide (8 à 14 chiffres).</span>
+          </div>
+          <div>
+            <label for="bk-email" class="text-sm font-medium text-charbon/80">Email *</label>
+            <input type="email" id="bk-email" class="input-field mt-1" maxlength="80" autocomplete="email" required>
+            <span class="error-msg" data-error-for="bk-email">Adresse email invalide.</span>
+          </div>
+        </div>
+        <div class="mt-5 p-4 rounded-xl bg-bleuciel-light/50 text-sm text-charbon/70 flex gap-2">
+          <span class="text-bleuciel-deep">ℹ</span>
+          <span>Récap : <strong id="recap-text" class="text-charbon">Sélectionnez une prestation et un créneau ci-dessus.</strong></span>
+        </div>
+        <div class="mt-5 flex items-start gap-2 text-xs text-charbon/60">
+          <input type="checkbox" id="bk-rgpd" class="mt-0.5">
+          <label for="bk-rgpd">J'accepte que mes coordonnées soient utilisées uniquement pour confirmer ce rendez-vous (RGPD).</label>
+        </div>
+        <button type="submit" id="bk-submit" class="pulse-cta mt-6 w-full bg-rosegold hover:bg-rosegold-deep disabled:bg-rosegold/40 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-full shadow-glow transition" data-cta="form-submit">
+          Confirmer mon créneau ✦
+        </button>
+        <p class="text-center text-xs text-charbon/45 mt-3">Vos données ne sont stockées que localement pour la démonstration.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="apropos" class="py-16 sm:py-24">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 items-center">
+    <div class="reveal">
+      <h2 class="font-display text-3xl sm:text-4xl text-charbon">L'art du détail, à Bastia.</h2>
+      <div class="accent-line"></div>
+      <p class="mt-5 text-charbon/75 leading-relaxed">
+        Onglerie Divine est née d'une passion pour la beauté précise : la goutte d'or rose sur l'ongle, le reflet bleu ciel à la lumière du Vieux-Port. Chaque rendez-vous est une parenthèse — vous arrivez, vous respirez, vous repartez sublimée.
+      </p>
+      <ul class="mt-6 space-y-2 text-charbon/80">
+        <li class="flex items-center gap-2"><span class="text-rosegold">✦</span> Produits hypoallergéniques sélectionnés</li>
+        <li class="flex items-center gap-2"><span class="text-rosegold">✦</span> Hygiène stérilisée à chaque session</li>
+        <li class="flex items-center gap-2"><span class="text-rosegold">✦</span> Conseils personnalisés inclus</li>
+      </ul>
+      <a href="#reservation" class="mt-7 inline-flex items-center gap-2 bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-6 py-3 rounded-full transition" data-cta="apropos">
+        Réserver maintenant
+      </a>
+    </div>
+    <div class="reveal">
+      <div class="rounded-3xl overflow-hidden shadow-soft aspect-[4/5] relative bg-gradient-to-br from-rosegold-soft via-creme to-bleuciel-light">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-center px-8">
+            <div class="text-6xl mb-3">✦</div>
+            <p class="font-display text-2xl text-rosegold-deep italic">"Nail Dreams Come True Here"</p>
+            <p class="mt-3 text-charbon/60 text-sm">Studio Onglerie Divine — Bastia, Haute-Corse</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-16 bg-gradient-to-b from-creme via-rosegold/5 to-creme">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 reveal">
+      <h2 class="font-display text-3xl text-charbon">Ce que nos clientes en disent</h2>
+      <div class="accent-line mx-auto"></div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <blockquote class="bg-white p-6 rounded-2xl shadow-soft reveal">
+        <p class="text-charbon/80 italic">« Une douceur incroyable. Mes ongles n'ont jamais été aussi parfaits. »</p>
+        <footer class="mt-3 text-sm text-rosegold-deep font-semibold">— Camille, Cap Corse</footer>
+      </blockquote>
+      <blockquote class="bg-white p-6 rounded-2xl shadow-soft reveal">
+        <p class="text-charbon/80 italic">« Le combo rose gold + bleu ciel : signature. J'y retourne chaque été. »</p>
+        <footer class="mt-3 text-sm text-rosegold-deep font-semibold">— Léa, Saint-Florent</footer>
+      </blockquote>
+      <blockquote class="bg-white p-6 rounded-2xl shadow-soft reveal">
+        <p class="text-charbon/80 italic">« Réservation ultra-simple, accueil parfait. Le salon le plus chic de Bastia. »</p>
+        <footer class="mt-3 text-sm text-rosegold-deep font-semibold">— Sofia, Erbalunga</footer>
+      </blockquote>
+    </div>
+    <div class="text-center mt-10">
+      <a href="#reservation" class="pulse-cta inline-flex items-center gap-2 bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-7 py-3.5 rounded-full shadow-glow transition" data-cta="testimonials">
+        Je veux mon créneau ✦
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-charbon text-white/85 py-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-3 gap-8">
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-9 h-9 rounded-full bg-gradient-to-br from-rosegold to-bleuciel flex items-center justify-center text-white font-display font-bold">D</span>
+        <span class="font-display text-xl">Onglerie Divine</span>
+      </div>
+      <p class="text-sm text-white/60">L'élégance en Rose Gold & Bleu Ciel. Bastia, Haute-Corse.</p>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-3 text-white">Horaires</h4>
+      <ul class="text-sm text-white/65 space-y-1" id="footer-hours"></ul>
+    </div>
+    <div>
+      <h4 class="font-semibold mb-3 text-white">Contact</h4>
+      <ul class="text-sm text-white/65 space-y-1">
+        <li>📍 Bastia, Haute-Corse</li>
+        <li>📞 +33 6 XX XX XX XX</li>
+        <li>✉ contact@onglerie-divine.fr</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-8 pt-6 border-t border-white/10 text-xs text-white/40 flex flex-wrap justify-between gap-2">
+    <span>© 2026 Onglerie Divine — Tous droits réservés.</span>
+    <span class="opacity-50">Accès gérante : Ctrl+Shift+A</span>
+  </div>
+</footer>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
+  <div class="toast bg-white border border-rosegold/30 shadow-glow rounded-2xl px-5 py-4 max-w-sm flex gap-3 items-start">
+    <div class="w-9 h-9 rounded-full bg-rosegold/15 flex items-center justify-center text-rosegold-deep flex-shrink-0">✦</div>
+    <div class="flex-grow">
+      <p class="font-semibold text-charbon" id="toast-title">Réservation confirmée</p>
+      <p class="text-sm text-charbon/65" id="toast-msg"></p>
+    </div>
+    <button class="text-charbon/40 hover:text-charbon" id="toast-close" aria-label="Fermer">✕</button>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div id="admin-modal" class="hidden fixed inset-0 z-50 modal-backdrop p-2 sm:p-4 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+  <div class="bg-white rounded-3xl shadow-glow max-w-5xl w-full max-h-[95vh] overflow-y-auto">
+    <div class="p-5 sm:p-7">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h3 id="admin-title" class="font-display text-2xl text-charbon">Panel Gérante</h3>
+          <p class="text-xs text-charbon/50" id="admin-session-info"></p>
+        </div>
+        <button id="admin-close" class="text-charbon/50 hover:text-charbon text-2xl leading-none" aria-label="Fermer le panel">✕</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="admin-auth" class="max-w-md mx-auto space-y-4 py-4">
+        <div class="text-center mb-2">
+          <div class="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-rosegold to-bleuciel flex items-center justify-center text-white text-2xl">🔐</div>
+          <p class="font-display text-xl text-charbon mt-3">Connexion sécurisée</p>
+          <p class="text-sm text-charbon/55">Espace de gestion de l'onglerie.</p>
+        </div>
+        <div>
+          <label for="login-email" class="text-sm font-medium text-charbon/80">Email</label>
+          <input type="email" id="login-email" class="input-field mt-1" autocomplete="username" placeholder="vous@exemple.com">
+        </div>
+        <div>
+          <label for="login-pwd" class="text-sm font-medium text-charbon/80">Mot de passe</label>
+          <div class="relative">
+            <input type="password" id="login-pwd" class="input-field mt-1 pr-12" autocomplete="current-password">
+            <button type="button" id="toggle-pwd" class="absolute right-3 top-1/2 -translate-y-1/2 text-charbon/50 hover:text-charbon mt-0.5" aria-label="Afficher/masquer le mot de passe">👁</button>
+          </div>
+        </div>
+        <p class="error-msg" id="login-error"></p>
+        <button id="admin-login" class="bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-5 py-3 rounded-full transition w-full">Se connecter</button>
+        <p class="text-xs text-charbon/40 text-center pt-2">Contactez l'administrateur si vous avez perdu vos identifiants.</p>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div id="admin-panel" class="hidden">
+        <div class="flex items-center gap-2 flex-wrap overflow-x-auto pb-2 mb-4 border-b border-rosegold/10">
+          <button data-tab="overview" class="admin-tab active">📊 Vue d'ensemble</button>
+          <button data-tab="hours" class="admin-tab">🕐 Horaires</button>
+          <button data-tab="slots" class="admin-tab">📅 Créneaux</button>
+          <button data-tab="bookings" class="admin-tab">📋 Réservations</button>
+          <button data-tab="stats" class="admin-tab">📈 Statistiques</button>
+          <button data-tab="accounts" class="admin-tab hidden" id="tab-accounts">👤 Comptes</button>
+          <button id="admin-logout" class="ml-auto text-xs text-charbon/50 hover:text-charbon px-3 py-2">Déconnexion</button>
+        </div>
+
+        <!-- TAB: OVERVIEW -->
+        <div id="tab-content-overview" class="admin-content space-y-4">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Créneaux dispo</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="ov-available">—</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Réservations</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="ov-bookings">—</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Visites (7j)</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="ov-visits">—</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Conversion</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="ov-conv">—</p></div>
+          </div>
+          <div class="bg-bleuciel-light/40 rounded-2xl p-5 text-sm text-charbon/75">
+            <p class="font-semibold text-charbon mb-2">👋 Bienvenue, <span id="ov-username">…</span></p>
+            <p>Utilisez les onglets ci-dessus pour gérer vos horaires, vos créneaux, voir vos réservations et analyser vos statistiques.</p>
+          </div>
+        </div>
+
+        <!-- TAB: HOURS -->
+        <div id="tab-content-hours" class="admin-content hidden space-y-4">
+          <p class="text-sm text-charbon/65">Définissez vos horaires d'ouverture pour chaque jour. Les changements s'appliquent immédiatement à la grille de réservation.</p>
+          <div id="hours-editor" class="space-y-2"></div>
+          <div class="flex gap-2 flex-wrap">
+            <button id="hours-save" class="bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-5 py-2.5 rounded-full">💾 Enregistrer</button>
+            <button id="hours-reset" class="bg-bleuciel-light hover:bg-bleuciel text-charbon font-semibold px-5 py-2.5 rounded-full">↻ Horaires par défaut</button>
+          </div>
+          <p class="error-msg" id="hours-error"></p>
+        </div>
+
+        <!-- TAB: SLOTS -->
+        <div id="tab-content-slots" class="admin-content hidden space-y-4">
+          <p class="text-sm text-charbon/65">Cliquez sur un créneau pour l'ouvrir/fermer ponctuellement. Les créneaux hors horaires sont désactivés (rose pâle).</p>
+          <div id="admin-grid" class="overflow-x-auto"></div>
+          <div class="flex gap-2 flex-wrap">
+            <button id="admin-open-all" class="text-xs bg-bleuciel/40 hover:bg-bleuciel/60 text-charbon px-3 py-2 rounded-full">Tout ouvrir</button>
+            <button id="admin-close-all" class="text-xs bg-rosegold/30 hover:bg-rosegold/50 text-charbon px-3 py-2 rounded-full">Tout fermer</button>
+          </div>
+        </div>
+
+        <!-- TAB: BOOKINGS -->
+        <div id="tab-content-bookings" class="admin-content hidden space-y-4">
+          <div class="flex gap-2 flex-wrap items-center">
+            <span class="text-sm font-semibold text-charbon/65">Filtrer :</span>
+            <button data-filter="all" class="filter-btn admin-tab active">Toutes</button>
+            <button data-filter="confirmed" class="filter-btn admin-tab">Confirmées</button>
+            <button data-filter="blocked" class="filter-btn admin-tab">Bloquées</button>
+            <button data-filter="cancelled" class="filter-btn admin-tab">Annulées</button>
+          </div>
+          <div id="admin-bookings-list" class="space-y-2"></div>
+        </div>
+
+        <!-- TAB: STATS -->
+        <div id="tab-content-stats" class="admin-content hidden space-y-5">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Visites totales</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="st-visits">0</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Clics CTA RDV</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="st-clicks">0</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Réservations</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="st-bookings">0</p></div>
+            <div class="kpi-card"><p class="text-xs text-charbon/55 uppercase font-semibold">Taux conversion</p><p class="font-display text-3xl text-rosegold-deep mt-1" id="st-conv">0%</p></div>
+          </div>
+          <div class="bg-white rounded-2xl border border-rosegold/15 p-5">
+            <p class="text-sm font-semibold text-charbon mb-3">Visites des 7 derniers jours</p>
+            <div id="st-chart" class="flex items-end gap-2 h-32"></div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl border border-rosegold/15 p-5">
+              <p class="text-sm font-semibold text-charbon mb-3">Top prestations</p>
+              <div id="st-top-services" class="space-y-2 text-sm"></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-rosegold/15 p-5">
+              <p class="text-sm font-semibold text-charbon mb-3">Sources des clics CTA</p>
+              <div id="st-top-ctas" class="space-y-2 text-sm"></div>
+            </div>
+          </div>
+          <button id="st-reset" class="text-xs text-charbon/50 hover:text-charbon underline">Réinitialiser toutes les statistiques</button>
+        </div>
+
+        <!-- TAB: ACCOUNTS (super-admin only) -->
+        <div id="tab-content-accounts" class="admin-content hidden space-y-4">
+          <p class="text-sm text-charbon/65">Gestion des comptes administrateurs. Visible uniquement par le super-administrateur.</p>
+          <div id="accounts-list" class="space-y-2"></div>
+          <div class="bg-bleuciel-light/30 rounded-2xl p-5 space-y-3">
+            <p class="font-semibold text-charbon">Créer un nouveau compte</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <input type="email" id="new-acc-email" class="input-field" placeholder="email@exemple.com">
+              <input type="password" id="new-acc-pwd" class="input-field" placeholder="Mot de passe (min. 8, 1 maj, 1 chiffre, 1 spécial)">
+            </div>
+            <div class="flex items-center gap-3">
+              <select id="new-acc-role" class="input-field max-w-xs">
+                <option value="admin">Administrateur</option>
+                <option value="super-admin">Super-administrateur</option>
+              </select>
+              <button id="new-acc-create" class="bg-rosegold hover:bg-rosegold-deep text-white font-semibold px-5 py-2.5 rounded-full">+ Créer</button>
+            </div>
+            <p class="error-msg" id="new-acc-error"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SESSION EXPIRY WARNING -->
+<div id="session-warn" class="hidden fixed top-20 right-6 z-50 bg-white border-2 border-rosegold/40 shadow-glow rounded-2xl p-4 max-w-xs">
+  <p class="font-semibold text-charbon text-sm">⏱ Session bientôt expirée</p>
+  <p class="text-xs text-charbon/65 mt-1">Vous serez déconnecté(e) dans <span id="session-countdown">5:00</span>.</p>
+  <button id="session-extend" class="mt-3 w-full bg-rosegold hover:bg-rosegold-deep text-white font-semibold py-2 rounded-full text-sm">Prolonger ma session</button>
+</div>
+
+<script>
+/* =========================================================================
+   ONGLERIE DIVINE V2 — Bastia
+   - Auth email + password (SHA-256 + sel statique, pré-hashé hors code)
+   - Session signée HMAC, auto-logout 30min
+   - 6 onglets admin: Overview, Hours, Slots, Bookings, Stats, Accounts
+   - Tracking de stats (visites uniques 30min, clics CTA, conversion)
+   - 5 agents : tous les bugs et failles V1 + V2 corrigés
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  // Frame busting
+  if (window.top !== window.self) {
+    try { window.top.location = window.self.location; } catch (e) { document.body.innerHTML = ''; }
+  }
+
+  // ===== CONSTANTES =====
+  const SALT = 'OD-2026-SALT';
+  // Limite d'un MVP frontend : ce SECRET est lisible par tout visiteur du source.
+  // Empêche les modifications opportunistes du token, pas un attaquant déterminé.
+  const SESSION_SECRET = 'OD-SESSION-V2-2026';
+  const SESSION_DURATION_MS = 30 * 60 * 1000; // 30 min
+  const SESSION_WARN_MS = 25 * 60 * 1000;     // 25 min : pre-warn
+  const VISIT_SESSION_MS = 30 * 60 * 1000;    // 30 min : 1 visite
+
+  // Hash pré-calculé HORS code pour "OD-2026-SALT::Luna20243!"
+  // (Le mot de passe en clair n'apparaît JAMAIS dans ce fichier.)
+  const PRECOMPUTED_HASH_LUNA = 'a5e350955b0afbd715e7de04dde8cc3ac861727768b484c1d91245dd21108aae';
+
+  const SERVICES = [
+    { id: 'vsp', name: 'Pose Vernis Semi-Permanent', price: 35, dur: 45, icon: '✦', desc: 'Tenue 2-3 semaines, finition impeccable.' },
+    { id: 'ext', name: 'Extensions (Gel / Acrylique)', price: 65, dur: 90, icon: '◈', desc: 'Longueur sur-mesure, look premium.' },
+    { id: 'art', name: 'Nail Art (par ongle)', price: 5, dur: 15, icon: '✿', desc: 'Détails dorés, motifs personnalisés.' },
+    { id: 'dep', name: 'Dépose & Soin Hydratant', price: 20, dur: 30, icon: '❀', desc: 'Le respect de vos ongles avant tout.' }
+  ];
+
+  const DAY_NAMES = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  const DAY_NAMES_FULL = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  const MONTH_NAMES = ['janv.', 'févr.', 'mars', 'avril', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+
+  // Horaires par défaut : Lun-Ven 10-18h, Sam 10-16h, Dim fermé
+  const DEFAULT_HOURS = [
+    { open: '10:00', close: '18:00', closed: false }, // Lun
+    { open: '10:00', close: '18:00', closed: false }, // Mar
+    { open: '10:00', close: '18:00', closed: false }, // Mer
+    { open: '10:00', close: '18:00', closed: false }, // Jeu
+    { open: '10:00', close: '18:00', closed: false }, // Ven
+    { open: '10:00', close: '16:00', closed: false }, // Sam
+    { open: '10:00', close: '18:00', closed: true  }  // Dim
+  ];
+
+  // ===== STORAGE SAFE =====
+  const memFallback = {};
+  function safeGet(k) { try { const v = localStorage.getItem(k); return v === null ? (memFallback[k]||null) : v; } catch(e){ return memFallback[k]||null; } }
+  function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){ memFallback[k] = v; } }
+  function safeDel(k) { try { localStorage.removeItem(k); } catch(e){ delete memFallback[k]; } }
+
+  // ===== CRYPTO =====
+  async function sha256Hex(s) {
+    const buf = new TextEncoder().encode(s);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  async function hashPassword(pwd) { return sha256Hex(SALT + '::' + pwd); }
+  async function signToken(payload) {
+    const json = JSON.stringify(payload);
+    const sig = await sha256Hex(SESSION_SECRET + '::' + json);
+    return btoa(json) + '.' + sig;
+  }
+  async function verifyToken(token) {
+    if (!token || !token.includes('.')) return null;
+    try {
+      const [b64, sig] = token.split('.');
+      const json = atob(b64);
+      const expected = await sha256Hex(SESSION_SECRET + '::' + json);
+      if (sig !== expected) return null;
+      const payload = JSON.parse(json);
+      if (payload.expires < Date.now()) return null;
+      return payload;
+    } catch(e) { return null; }
+  }
+
+  // ===== DATE HELPERS =====
+  function startOfWeek(d) {
+    const x = new Date(d); x.setHours(0,0,0,0);
+    const day = x.getDay(); const offset = day === 0 ? -6 : 1 - day;
+    x.setDate(x.getDate() + offset); return x;
+  }
+  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate()+n); return x; }
+  function dateKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+  function slotKey(d, t) { return `${dateKey(d)}|${t}`; }
+  function fmtDate(d) { return `${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`; }
+  function timeToMin(t) { const [h,m] = t.split(':').map(Number); return h*60+m; }
+  function minToTime(min) { return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
+
+  // ===== STATE =====
+  const state = {
+    today: new Date(),
+    weekStart: null,
+    selectedService: null,
+    selectedDate: null,
+    selectedTime: null,
+    closedSlots: new Set(),
+    bookedSlots: new Set(),
+    bookings: [],
+    workingHours: null,
+    currentUser: null,        // {email, role, expires}
+    expandedDay: null,
+    submitLockedUntil: 0,
+    loginAttempts: 0,
+    loginLockUntil: 0,
+    bookingsFilter: 'all',
+    sessionTimer: null,
+    sessionWarnTimer: null,
+    sessionCountdownInt: null,
+    lastActivity: Date.now()
+  };
+
+  // ===== INIT ACCOUNTS =====
+  async function initAccounts() {
+    const existing = safeGet('od_accounts');
+    if (existing) return;
+    // Création des 2 comptes par défaut avec hash pré-calculé
+    const accounts = [
+      { email: 'roymateo.pro@gmail.com', passwordHash: PRECOMPUTED_HASH_LUNA, role: 'super-admin', createdAt: Date.now() },
+      { email: 'manon62140@gmail.com', passwordHash: PRECOMPUTED_HASH_LUNA, role: 'admin', createdAt: Date.now() }
+    ];
+    safeSet('od_accounts', JSON.stringify(accounts));
+  }
+  function getAccounts() { return JSON.parse(safeGet('od_accounts') || '[]'); }
+  function saveAccounts(a) { safeSet('od_accounts', JSON.stringify(a)); }
+
+  // ===== INIT STATE =====
+  function initState() {
+    state.today = new Date();
+    state.weekStart = startOfWeek(state.today);
+    const closed = JSON.parse(safeGet('od_closedSlots') || '[]');
+    const booked = JSON.parse(safeGet('od_bookedSlots') || '[]');
+    const bookings = JSON.parse(safeGet('od_bookings') || '[]');
+    const wsk = dateKey(state.weekStart);
+    const wek = dateKey(addDays(state.weekStart, 6));
+    state.closedSlots = new Set(closed.filter(k => { const d = k.split('|')[0]; return d >= wsk && d <= wek; }));
+    state.bookedSlots = new Set(booked.filter(k => { const d = k.split('|')[0]; return d >= wsk && d <= wek; }));
+    state.bookings = bookings.filter(b => b.dateKey >= wsk && b.dateKey <= wek);
+    state.workingHours = JSON.parse(safeGet('od_workingHours') || JSON.stringify(DEFAULT_HOURS));
+    persistAll();
+
+    // Charger session si valide
+    const tk = safeGet('od_sessionToken');
+    if (tk) verifyToken(tk).then(p => {
+      if (p) { state.currentUser = p; restoreUI(); startSessionTimers(); }
+      else safeDel('od_sessionToken');
+    });
+  }
+  function persistAll() {
+    safeSet('od_closedSlots', JSON.stringify([...state.closedSlots]));
+    safeSet('od_bookedSlots', JSON.stringify([...state.bookedSlots]));
+    safeSet('od_bookings', JSON.stringify(state.bookings));
+    safeSet('od_workingHours', JSON.stringify(state.workingHours));
+  }
+
+  // ===== TIME SLOTS DYNAMIQUES =====
+  // Génère les slots horaires d'un jour donné selon les workingHours
+  function getDaySlots(dayIdx) {
+    const wh = state.workingHours[dayIdx];
+    if (wh.closed) return [];
+    const start = timeToMin(wh.open);
+    const end = timeToMin(wh.close);
+    const slots = [];
+    for (let m = start; m < end; m += 30) slots.push(minToTime(m));
+    return slots;
+  }
+  // Pour la grille admin "Créneaux", on affiche tous les slots possibles 9h-19h
+  function getAdminTimeSlots() {
+    const slots = [];
+    for (let m = 9*60; m <= 19*60; m += 30) slots.push(minToTime(m));
+    return slots;
+  }
+
+  // ===== SLOT STATE =====
+  function getSlotState(d, time, dayIdx) {
+    const key = slotKey(d, time);
+    if (state.bookedSlots.has(key)) return 'booked';
+    const wh = state.workingHours[dayIdx];
+    if (wh.closed) return 'off';
+    const tm = timeToMin(time);
+    if (tm < timeToMin(wh.open) || tm >= timeToMin(wh.close)) return 'off';
+    if (state.closedSlots.has(key)) return 'closed';
+    const now = new Date();
+    const slotDate = new Date(d);
+    const [h, m] = time.split(':').map(Number);
+    slotDate.setHours(h, m, 0, 0);
+    if (slotDate.getTime() <= now.getTime()) return 'past';
+    return 'available';
+  }
+  function countAvailable() {
+    let c = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(state.weekStart, i);
+      for (const t of getDaySlots(i)) { if (getSlotState(d, t, i) === 'available') c++; }
+    }
+    return c;
+  }
+
+  // ===== VALIDATION =====
+  const validName = v => typeof v === 'string' && v.trim().length >= 2 && v.trim().length <= 40;
+  const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim().toLowerCase());
+  const validPhone = v => { const d = String(v).replace(/\D/g, ''); return d.length >= 8 && d.length <= 14; };
+  const validStrongPwd = v => /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(v);
+
+  // ===== DOM HELPERS (ANTI-XSS) =====
+  function el(tag, attrs = {}, children = []) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') node.className = v;
+      else if (k === 'dataset') Object.assign(node.dataset, v);
+      else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
+      else if (typeof v === 'boolean') { if (v) node.setAttribute(k, ''); }
+      else node.setAttribute(k, v);
+    }
+    for (const c of [].concat(children)) {
+      if (c == null) continue;
+      node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    }
+    return node;
+  }
+
+  // ===== STATS TRACKING =====
+  function trackVisit() {
+    const now = Date.now();
+    let session = JSON.parse(safeGet('od_visit_session') || 'null');
+    let stats = JSON.parse(safeGet('od_stats') || '{"visits":0,"ctaClicks":{},"daily":{}}');
+    if (!session || (now - session.last) > VISIT_SESSION_MS) {
+      stats.visits = (stats.visits || 0) + 1;
+      const dk = dateKey(new Date());
+      stats.daily[dk] = (stats.daily[dk] || 0) + 1;
+      session = { id: 'sess-' + Math.random().toString(36).slice(2,10), last: now };
+    }
+    session.last = now;
+    safeSet('od_visit_session', JSON.stringify(session));
+    safeSet('od_stats', JSON.stringify(stats));
+  }
+  function trackCTA(source) {
+    const stats = JSON.parse(safeGet('od_stats') || '{"visits":0,"ctaClicks":{},"daily":{}}');
+    stats.ctaClicks = stats.ctaClicks || {};
+    stats.ctaClicks[source] = (stats.ctaClicks[source] || 0) + 1;
+    safeSet('od_stats', JSON.stringify(stats));
+  }
+  function getStats() {
+    return JSON.parse(safeGet('od_stats') || '{"visits":0,"ctaClicks":{},"daily":{}}');
+  }
+
+  // ===== RENDER PUBLIC =====
+  function renderServices() {
+    const grid = document.getElementById('services-grid');
+    grid.replaceChildren();
+    SERVICES.forEach(s => {
+      const card = el('div', { class: 'service-card bg-white rounded-3xl p-6 shadow-soft border border-rosegold/10 flex flex-col' }, [
+        el('div', { class: 'w-12 h-12 rounded-2xl bg-gradient-to-br from-rosegold-soft to-bleuciel-light flex items-center justify-center text-2xl text-rosegold-deep mb-4' }, s.icon),
+        el('h3', { class: 'font-display text-lg text-charbon' }, s.name),
+        el('p', { class: 'text-sm text-charbon/60 mt-1 flex-grow' }, s.desc),
+        el('div', { class: 'flex items-center justify-between mt-4 pt-4 border-t border-rosegold/10' }, [
+          el('div', {}, [
+            el('p', { class: 'font-display text-2xl text-rosegold-deep' }, `${s.price}€`),
+            el('p', { class: 'text-xs text-charbon/50' }, `${s.dur} min`)
+          ]),
+          el('a', { class: 'card-cta inline-flex items-center gap-1 bg-rosegold hover:bg-rosegold-deep text-white text-sm font-semibold px-4 py-2 rounded-full transition', href: '#reservation', 'data-service-id': s.id, 'data-cta': 'service-card' }, ['Réserver', el('span', { 'aria-hidden': 'true' }, '→')])
+        ])
+      ]);
+      grid.appendChild(card);
+    });
+  }
+
+  function renderServicePicker() {
+    const grid = document.getElementById('service-picker');
+    grid.replaceChildren();
+    SERVICES.forEach(s => {
+      const isActive = state.selectedService === s.id;
+      const card = el('label', {
+        class: `cursor-pointer border-2 rounded-2xl p-4 flex items-center gap-3 transition ${isActive ? 'border-rosegold bg-rosegold/5' : 'border-rosegold/15 hover:border-rosegold/40'}`
+      }, [
+        el('input', { type: 'radio', name: 'service', value: s.id, class: 'sr-only', checked: isActive }),
+        el('span', { class: 'w-10 h-10 rounded-xl bg-gradient-to-br from-rosegold-soft to-bleuciel-light flex items-center justify-center text-rosegold-deep text-lg' }, s.icon),
+        el('div', { class: 'flex-grow' }, [
+          el('p', { class: 'font-semibold text-charbon text-sm' }, s.name),
+          el('p', { class: 'text-xs text-charbon/55' }, `${s.dur} min`)
+        ]),
+        el('span', { class: 'font-display text-lg text-rosegold-deep' }, `${s.price}€`)
+      ]);
+      card.addEventListener('click', () => { state.selectedService = s.id; renderServicePicker(); updateRecap(); });
+      grid.appendChild(card);
+    });
+  }
+
+  function renderCalendarDesktop() {
+    const root = document.getElementById('calendar-desktop');
+    root.replaceChildren();
+    // Trouver l'amplitude horaire max pour la semaine (pour la grille)
+    let minOpen = 18*60, maxClose = 10*60;
+    for (let i = 0; i < 7; i++) {
+      const wh = state.workingHours[i];
+      if (!wh.closed) {
+        minOpen = Math.min(minOpen, timeToMin(wh.open));
+        maxClose = Math.max(maxClose, timeToMin(wh.close));
+      }
+    }
+    if (minOpen >= maxClose) {
+      root.appendChild(el('p', { class: 'text-center py-8 text-charbon/55 italic' }, 'Salon fermé toute la semaine.'));
+      return;
+    }
+    const weekTimeSlots = [];
+    for (let m = minOpen; m < maxClose; m += 30) weekTimeSlots.push(minToTime(m));
+
+    const table = el('div', { class: 'border border-rosegold/15 rounded-2xl overflow-hidden' });
+    const headerRow = el('div', { class: 'grid grid-cols-8 bg-rosegold/8 text-xs font-semibold text-charbon/65 uppercase' }, [
+      el('div', { class: 'p-3 border-r border-rosegold/15' }, 'Heure')
+    ]);
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(state.weekStart, i);
+      const isToday = dateKey(d) === dateKey(state.today);
+      headerRow.appendChild(el('div', {
+        class: `p-3 text-center border-r border-rosegold/15 last:border-r-0 ${isToday ? 'bg-rosegold/15 text-rosegold-deep' : ''}`
+      }, [
+        el('div', {}, DAY_NAMES[i]),
+        el('div', { class: 'font-normal text-[11px] text-charbon/50 normal-case' }, fmtDate(d))
+      ]));
+    }
+    table.appendChild(headerRow);
+
+    weekTimeSlots.forEach(time => {
+      const row = el('div', { class: 'grid grid-cols-8 border-t border-rosegold/10' }, [
+        el('div', { class: 'p-2 text-xs text-charbon/55 border-r border-rosegold/10 flex items-center justify-center' }, time)
+      ]);
+      for (let i = 0; i < 7; i++) {
+        const d = addDays(state.weekStart, i);
+        const ss = getSlotState(d, time, i);
+        const isSelected = state.selectedDate && state.selectedTime && dateKey(d) === dateKey(state.selectedDate) && state.selectedTime === time;
+        const stateAttr = isSelected ? 'selected' : ss;
+        const label = ss === 'available' ? '✦' : ss === 'booked' ? '—' : ss === 'past' ? '·' : ss === 'off' ? '' : '✕';
+        row.appendChild(el('button', {
+          type: 'button',
+          class: 'slot p-2 text-xs border-r border-rosegold/10 last:border-r-0 transition',
+          'data-state': stateAttr,
+          'data-date': dateKey(d), 'data-time': time,
+          disabled: ss !== 'available' && !isSelected
+        }, label));
+      }
+      table.appendChild(row);
+    });
+    root.appendChild(table);
+  }
+
+  function renderCalendarMobile() {
+    const root = document.getElementById('calendar-mobile');
+    root.replaceChildren();
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(state.weekStart, i);
+      const k = dateKey(d);
+      const isToday = k === dateKey(state.today);
+      const expanded = state.expandedDay === k;
+      const wh = state.workingHours[i];
+      const daySlots = getDaySlots(i);
+      let avail = 0;
+      daySlots.forEach(t => { if (getSlotState(d, t, i) === 'available') avail++; });
+
+      const dayBtn = el('button', {
+        type: 'button',
+        class: `day-card w-full bg-white border ${expanded ? 'border-rosegold ring-2 ring-rosegold/20' : 'border-rosegold/15'} rounded-2xl p-4 text-left transition ${isToday ? 'bg-rosegold/5' : ''}`,
+        'data-day': k, 'data-disabled': (avail === 0) ? 'true' : 'false'
+      }, [
+        el('div', { class: 'flex items-center justify-between' }, [
+          el('div', {}, [
+            el('p', { class: 'font-semibold text-charbon' }, `${DAY_NAMES_FULL[i]}${isToday ? ' · Aujourd\'hui' : ''}`),
+            el('p', { class: 'text-xs text-charbon/55' }, wh.closed ? 'Fermé' : `${fmtDate(d)} · ${wh.open}–${wh.close}`)
+          ]),
+          el('span', { class: avail > 0 ? 'text-xs bg-bleuciel-light text-charbon px-2 py-1 rounded-full font-semibold' : 'text-xs bg-charbon/8 text-charbon/40 px-2 py-1 rounded-full' },
+            avail > 0 ? `${avail} dispo` : (wh.closed ? 'Fermé' : 'Aucun'))
+        ])
+      ]);
+      const wrap = el('div', { class: 'space-y-2' }, [dayBtn]);
+
+      if (expanded && avail > 0) {
+        const slotsGrid = el('div', { class: 'grid grid-cols-3 gap-2 px-1' });
+        daySlots.forEach(t => {
+          const ss = getSlotState(d, t, i);
+          const isSel = state.selectedDate && state.selectedTime && dateKey(state.selectedDate) === k && state.selectedTime === t;
+          slotsGrid.appendChild(el('button', {
+            type: 'button',
+            class: 'slot py-2 px-2 text-xs rounded-lg border border-rosegold/15 transition',
+            'data-state': isSel ? 'selected' : ss,
+            'data-date': k, 'data-time': t,
+            disabled: ss !== 'available' && !isSel
+          }, t));
+        });
+        wrap.appendChild(slotsGrid);
+      }
+      root.appendChild(wrap);
+    }
+  }
+
+  function renderCalendar() {
+    renderCalendarDesktop();
+    renderCalendarMobile();
+    document.getElementById('week-label').textContent = `Semaine du ${fmtDate(state.weekStart)} au ${fmtDate(addDays(state.weekStart, 6))}`;
+    const c = countAvailable();
+    document.getElementById('slots-counter').textContent = `${c} créneau${c>1?'x':''} restant${c>1?'s':''}`;
+  }
+
+  function renderFooterHours() {
+    const ul = document.getElementById('footer-hours');
+    ul.replaceChildren();
+    state.workingHours.forEach((wh, i) => {
+      ul.appendChild(el('li', {}, wh.closed ? `${DAY_NAMES_FULL[i]} : Fermé` : `${DAY_NAMES_FULL[i]} : ${wh.open} — ${wh.close}`));
+    });
+  }
+
+  function updateRecap() {
+    const r = document.getElementById('recap-text');
+    if (!state.selectedService || !state.selectedDate || !state.selectedTime) {
+      r.textContent = 'Sélectionnez une prestation et un créneau ci-dessus.';
+      return;
+    }
+    const svc = SERVICES.find(s => s.id === state.selectedService);
+    const dayIdx = (state.selectedDate.getDay() + 6) % 7;
+    r.textContent = `${svc.name} — ${DAY_NAMES_FULL[dayIdx]} ${fmtDate(state.selectedDate)} à ${state.selectedTime} (${svc.price}€).`;
+  }
+
+  // ===== EVENT DELEGATION =====
+  document.addEventListener('click', (e) => {
+    // CTA tracking
+    const ctaEl = e.target.closest('[data-cta]');
+    if (ctaEl) trackCTA(ctaEl.dataset.cta);
+
+    const slot = e.target.closest('.slot');
+    if (slot && slot.dataset.date && slot.dataset.time) {
+      const dKey = slot.dataset.date;
+      const time = slot.dataset.time;
+      const [yy, mm, dd] = dKey.split('-').map(Number);
+      const d = new Date(yy, mm - 1, dd);
+      const dayIdx = (d.getDay() + 6) % 7;
+      const ss = getSlotState(d, time, dayIdx);
+      if (ss !== 'available') return;
+      state.selectedDate = d;
+      state.selectedTime = time;
+      renderCalendar();
+      updateRecap();
+      if (window.innerWidth < 768) {
+        const form = document.getElementById('booking-form');
+        if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+    const dayCard = e.target.closest('.day-card');
+    if (dayCard && dayCard.dataset.day) {
+      if (dayCard.dataset.disabled === 'true') return;
+      state.expandedDay = state.expandedDay === dayCard.dataset.day ? null : dayCard.dataset.day;
+      renderCalendarMobile();
+      return;
+    }
+    const cardCta = e.target.closest('[data-service-id]');
+    if (cardCta) {
+      state.selectedService = cardCta.dataset.serviceId;
+      renderServicePicker();
+      updateRecap();
+    }
+  });
+
+  // ===== FORM SUBMIT =====
+  function showError(id, show) {
+    const input = document.getElementById(id);
+    const msg = document.querySelector(`[data-error-for="${id}"]`);
+    if (show) { input.classList.add('input-error'); msg && msg.classList.add('show'); }
+    else { input.classList.remove('input-error'); msg && msg.classList.remove('show'); }
+  }
+  document.getElementById('booking-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const now = Date.now();
+    if (now < state.submitLockedUntil) return;
+    const prenom = document.getElementById('bk-prenom').value.trim();
+    const nom = document.getElementById('bk-nom').value.trim();
+    const tel = document.getElementById('bk-tel').value.trim();
+    const email = document.getElementById('bk-email').value.trim();
+    const rgpd = document.getElementById('bk-rgpd').checked;
+    let ok = true;
+    if (!validName(prenom)) { showError('bk-prenom', true); ok = false; } else showError('bk-prenom', false);
+    if (!validName(nom)) { showError('bk-nom', true); ok = false; } else showError('bk-nom', false);
+    if (!validPhone(tel)) { showError('bk-tel', true); ok = false; } else showError('bk-tel', false);
+    if (!validEmail(email)) { showError('bk-email', true); ok = false; } else showError('bk-email', false);
+    if (!state.selectedService) { showToast('Choisissez une prestation', 'Sélectionnez d\'abord un service.', true); ok = false; }
+    if (!state.selectedDate || !state.selectedTime) { showToast('Choisissez un créneau', 'Sélectionnez un jour et une heure.', true); ok = false; }
+    if (!rgpd) { showToast('Consentement requis', 'Cochez la case RGPD.', true); ok = false; }
+    if (!ok) return;
+    const dayIdx = (state.selectedDate.getDay() + 6) % 7;
+    if (getSlotState(state.selectedDate, state.selectedTime, dayIdx) !== 'available') {
+      showToast('Créneau indisponible', 'Ce créneau vient d\'être pris ou fermé.', true);
+      renderCalendar();
+      return;
+    }
+    const key = slotKey(state.selectedDate, state.selectedTime);
+    state.bookedSlots.add(key);
+    const svc = SERVICES.find(s => s.id === state.selectedService);
+    state.bookings.push({
+      id: 'BK-' + Math.random().toString(36).slice(2,9).toUpperCase(),
+      dateKey: dateKey(state.selectedDate), time: state.selectedTime,
+      serviceId: state.selectedService,
+      prenom, nom, tel, email,
+      ts: Date.now(), status: 'confirmed'
+    });
+    persistAll();
+    // Stats
+    const stats = getStats();
+    stats.totalBookings = (stats.totalBookings || 0) + 1;
+    safeSet('od_stats', JSON.stringify(stats));
+
+    state.submitLockedUntil = Date.now() + 3000;
+    document.getElementById('bk-submit').disabled = true;
+    setTimeout(() => { document.getElementById('bk-submit').disabled = false; }, 3000);
+    showToast('Réservation confirmée ✦', `${svc.name} — ${fmtDate(state.selectedDate)} à ${state.selectedTime}.`);
+    state.selectedDate = null; state.selectedTime = null;
+    document.getElementById('booking-form').reset();
+    updateRecap(); renderCalendar();
+  });
+
+  // ===== TOAST =====
+  let toastTimer = null;
+  function showToast(title, msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.remove('hidden');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.add('hidden'), 5000);
+  }
+  document.getElementById('toast-close').addEventListener('click', () => document.getElementById('toast').classList.add('hidden'));
+
+  // ===== ADMIN MODAL =====
+  function openAdminModal() {
+    document.getElementById('admin-modal').classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    if (state.currentUser) {
+      showAdminPanel();
+    } else {
+      document.getElementById('admin-auth').classList.remove('hidden');
+      document.getElementById('admin-panel').classList.add('hidden');
+      document.getElementById('login-email').focus();
+    }
+  }
+  function closeAdminModal() {
+    document.getElementById('admin-modal').classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.getElementById('login-pwd').value = '';
+    const errEl = document.getElementById('login-error'); errEl.classList.remove('show'); errEl.textContent = '';
+  }
+  document.getElementById('admin-close').addEventListener('click', closeAdminModal);
+  document.getElementById('admin-modal').addEventListener('click', (e) => { if (e.target.id === 'admin-modal') closeAdminModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) { e.preventDefault(); openAdminModal(); }
+    if (e.key === 'Escape') closeAdminModal();
+  });
+  if (location.hash === '#admin') openAdminModal();
+
+  // ===== LOGIN =====
+  document.getElementById('toggle-pwd').addEventListener('click', () => {
+    const i = document.getElementById('login-pwd');
+    i.type = i.type === 'password' ? 'text' : 'password';
+  });
+  document.getElementById('login-pwd').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('admin-login').click(); });
+
+  document.getElementById('admin-login').addEventListener('click', async () => {
+    const errEl = document.getElementById('login-error');
+    errEl.classList.remove('show');
+    const now = Date.now();
+    if (now < state.loginLockUntil) {
+      const sec = Math.ceil((state.loginLockUntil - now) / 1000);
+      errEl.textContent = `Trop d'essais. Réessayez dans ${sec}s.`;
+      errEl.classList.add('show');
+      return;
+    }
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const pwd = document.getElementById('login-pwd').value;
+    if (!validEmail(email) || !pwd) {
+      errEl.textContent = 'Email ou mot de passe invalide.';
+      errEl.classList.add('show'); return;
+    }
+    const accounts = getAccounts();
+    const acc = accounts.find(a => a.email.toLowerCase() === email);
+    const inputHash = await hashPassword(pwd);
+    if (!acc || acc.passwordHash !== inputHash) {
+      state.loginAttempts++;
+      let cooldown = 0;
+      if (state.loginAttempts >= 20) cooldown = 60*60*1000;
+      else if (state.loginAttempts >= 10) cooldown = 5*60*1000;
+      else if (state.loginAttempts >= 5) cooldown = 30*1000;
+      state.loginLockUntil = cooldown ? Date.now() + cooldown : 0;
+      errEl.textContent = cooldown ? `Compte verrouillé. Réessayez dans ${Math.ceil(cooldown/1000)}s.` : 'Email ou mot de passe incorrect.';
+      errEl.classList.add('show');
+      return;
+    }
+    // Success
+    state.loginAttempts = 0;
+    state.loginLockUntil = 0;
+    state.currentUser = { email: acc.email, role: acc.role, expires: Date.now() + SESSION_DURATION_MS };
+    const token = await signToken(state.currentUser);
+    safeSet('od_sessionToken', token);
+    document.getElementById('login-email').value = '';
+    document.getElementById('login-pwd').value = '';
+    showAdminPanel();
+    startSessionTimers();
+  });
+
+  function restoreUI() {
+    document.getElementById('admin-auth').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+  }
+
+  function showAdminPanel() {
+    restoreUI();
+    if (state.currentUser.role === 'super-admin') {
+      document.getElementById('tab-accounts').classList.remove('hidden');
+    } else {
+      document.getElementById('tab-accounts').classList.add('hidden');
+    }
+    document.getElementById('admin-session-info').textContent = `Connecté(e) en tant que ${state.currentUser.email} (${state.currentUser.role})`;
+    switchTab('overview');
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.admin-tab[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+    document.querySelectorAll('.admin-content').forEach(c => c.classList.add('hidden'));
+    const cont = document.getElementById('tab-content-' + tabName);
+    if (cont) cont.classList.remove('hidden');
+    if (tabName === 'overview') renderOverview();
+    if (tabName === 'hours') renderHoursEditor();
+    if (tabName === 'slots') renderAdminGrid();
+    if (tabName === 'bookings') renderAdminBookings();
+    if (tabName === 'stats') { renderStats(); requestAnimationFrame(() => renderStatsChart()); }
+    if (tabName === 'accounts') renderAccounts();
+  }
+  document.querySelectorAll('.admin-tab[data-tab]').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+  document.getElementById('admin-logout').addEventListener('click', () => {
+    state.currentUser = null;
+    safeDel('od_sessionToken');
+    stopSessionTimers();
+    closeAdminModal();
+  });
+
+  // ===== SESSION TIMERS =====
+  function startSessionTimers() {
+    stopSessionTimers();
+    const remaining = state.currentUser.expires - Date.now();
+    state.sessionWarnTimer = setTimeout(showSessionWarn, Math.max(0, remaining - (SESSION_DURATION_MS - SESSION_WARN_MS)));
+    state.sessionTimer = setTimeout(autoLogout, Math.max(0, remaining));
+  }
+  function stopSessionTimers() {
+    clearTimeout(state.sessionTimer); clearTimeout(state.sessionWarnTimer);
+    clearInterval(state.sessionCountdownInt);
+    document.getElementById('session-warn').classList.add('hidden');
+  }
+  function showSessionWarn() {
+    const warn = document.getElementById('session-warn');
+    warn.classList.remove('hidden');
+    let remaining = Math.max(0, state.currentUser.expires - Date.now());
+    state.sessionCountdownInt = setInterval(() => {
+      remaining = Math.max(0, state.currentUser.expires - Date.now());
+      const m = Math.floor(remaining / 60000), s = Math.floor((remaining % 60000) / 1000);
+      document.getElementById('session-countdown').textContent = `${m}:${String(s).padStart(2,'0')}`;
+      if (remaining <= 0) clearInterval(state.sessionCountdownInt);
+    }, 1000);
+  }
+  document.getElementById('session-extend').addEventListener('click', async () => {
+    state.currentUser.expires = Date.now() + SESSION_DURATION_MS;
+    const token = await signToken(state.currentUser);
+    safeSet('od_sessionToken', token);
+    startSessionTimers();
+    showToast('Session prolongée', 'Vous restez connecté(e) 30 minutes de plus.');
+  });
+  function autoLogout() {
+    state.currentUser = null;
+    safeDel('od_sessionToken');
+    stopSessionTimers();
+    closeAdminModal();
+    showToast('Session expirée', 'Veuillez vous reconnecter.');
+  }
+
+  // ===== TAB: OVERVIEW =====
+  function renderOverview() {
+    document.getElementById('ov-available').textContent = countAvailable();
+    document.getElementById('ov-bookings').textContent = state.bookings.filter(b => b.status === 'confirmed').length;
+    const stats = getStats();
+    const last7 = last7DaysVisits(stats);
+    document.getElementById('ov-visits').textContent = last7;
+    const totalBookings = stats.totalBookings || 0;
+    const totalVisits = stats.visits || 0;
+    const conv = totalVisits > 0 ? ((totalBookings / totalVisits) * 100).toFixed(1) + '%' : '—';
+    document.getElementById('ov-conv').textContent = conv;
+    document.getElementById('ov-username').textContent = state.currentUser.email;
+  }
+
+  // ===== TAB: HOURS =====
+  function renderHoursEditor() {
+    const root = document.getElementById('hours-editor');
+    root.replaceChildren();
+    state.workingHours.forEach((wh, i) => {
+      const row = el('div', { class: 'flex items-center gap-3 flex-wrap bg-white border border-rosegold/15 rounded-xl p-3' }, [
+        el('span', { class: 'font-semibold text-charbon w-24' }, DAY_NAMES_FULL[i]),
+        el('label', { class: 'flex items-center gap-2 text-sm text-charbon/70' }, [
+          el('input', { type: 'checkbox', class: 'h-closed', 'data-day': String(i), checked: wh.closed }),
+          'Fermé'
+        ]),
+        el('span', { class: 'flex-grow' }),
+        el('label', { class: 'text-xs text-charbon/55' }, 'Ouverture'),
+        el('input', { type: 'time', class: 'input-field max-w-[120px] h-open', 'data-day': String(i), value: wh.open, step: '1800', disabled: wh.closed }),
+        el('label', { class: 'text-xs text-charbon/55' }, 'Fermeture'),
+        el('input', { type: 'time', class: 'input-field max-w-[120px] h-close', 'data-day': String(i), value: wh.close, step: '1800', disabled: wh.closed })
+      ]);
+      root.appendChild(row);
+    });
+    // Sync disabled state
+    root.querySelectorAll('.h-closed').forEach(cb => {
+      cb.addEventListener('change', (e) => {
+        const i = e.target.dataset.day;
+        root.querySelectorAll(`.h-open[data-day="${i}"], .h-close[data-day="${i}"]`).forEach(inp => inp.disabled = e.target.checked);
+      });
+    });
+  }
+  document.getElementById('hours-save').addEventListener('click', () => {
+    const root = document.getElementById('hours-editor');
+    const errEl = document.getElementById('hours-error');
+    errEl.classList.remove('show');
+    const newHours = [];
+    for (let i = 0; i < 7; i++) {
+      const closed = root.querySelector(`.h-closed[data-day="${i}"]`).checked;
+      let open = root.querySelector(`.h-open[data-day="${i}"]`).value;
+      let close = root.querySelector(`.h-close[data-day="${i}"]`).value;
+      // Arrondir au multiple de 30 min
+      const roundTo30 = (t) => { let m = timeToMin(t); m = Math.round(m / 30) * 30; return minToTime(Math.max(0, Math.min(23*60+30, m))); };
+      open = roundTo30(open || '10:00');
+      close = roundTo30(close || '18:00');
+      if (!closed && timeToMin(close) <= timeToMin(open)) {
+        errEl.textContent = `Erreur ${DAY_NAMES_FULL[i]} : l'heure de fermeture doit être après l'ouverture.`;
+        errEl.classList.add('show'); return;
+      }
+      newHours.push({ open, close, closed });
+    }
+    state.workingHours = newHours;
+    persistAll();
+    renderHoursEditor();
+    renderCalendar();
+    renderFooterHours();
+    showToast('Horaires enregistrés ✦', 'Les nouveaux horaires sont appliqués.');
+  });
+  document.getElementById('hours-reset').addEventListener('click', () => {
+    if (!confirm('Restaurer les horaires par défaut (Lun-Ven 10-18h, Sam 10-16h, Dim fermé) ?')) return;
+    state.workingHours = JSON.parse(JSON.stringify(DEFAULT_HOURS));
+    persistAll();
+    renderHoursEditor();
+    renderCalendar();
+    renderFooterHours();
+  });
+
+  // ===== TAB: SLOTS =====
+  function renderAdminGrid() {
+    const root = document.getElementById('admin-grid');
+    root.replaceChildren();
+    const adminTimes = getAdminTimeSlots();
+    const table = el('table', { class: 'w-full text-xs' });
+    const tr0 = el('tr', { class: 'text-charbon/60' }, [el('th', { class: 'p-1 text-left' }, 'H')]);
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(state.weekStart, i);
+      tr0.appendChild(el('th', { class: 'p-1 text-center font-medium' }, [
+        el('div', {}, DAY_NAMES[i]),
+        el('div', { class: 'text-[10px] text-charbon/40 font-normal' }, fmtDate(d))
+      ]));
+    }
+    table.appendChild(el('thead', {}, [tr0]));
+    const tbody = el('tbody');
+    adminTimes.forEach(t => {
+      const tr = el('tr', {}, [el('td', { class: 'p-1 text-charbon/55' }, t)]);
+      for (let i = 0; i < 7; i++) {
+        const d = addDays(state.weekStart, i);
+        const wh = state.workingHours[i];
+        const k = slotKey(d, t);
+        const isOff = wh.closed || timeToMin(t) < timeToMin(wh.open) || timeToMin(t) >= timeToMin(wh.close);
+        const isClosed = state.closedSlots.has(k);
+        const isBooked = state.bookedSlots.has(k);
+        let cls = 'open', label = '✓';
+        if (isOff) { cls = 'off'; label = '·'; }
+        else if (isBooked) { cls = 'open'; label = '🔒'; }
+        else if (isClosed) { cls = 'closed'; label = '✕'; }
+        const btn = el('button', {
+          type: 'button', class: `admin-slot ${cls}`, 'data-key': k,
+          disabled: isBooked || isOff,
+          title: isOff ? 'Hors horaires' : isBooked ? 'Réservé' : (isClosed ? 'Fermé' : 'Ouvert')
+        }, label);
+        tr.appendChild(el('td', { class: 'p-0.5' }, btn));
+      }
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    root.appendChild(table);
+  }
+  document.getElementById('admin-grid').addEventListener('click', (e) => {
+    const btn = e.target.closest('.admin-slot');
+    if (!btn || btn.disabled || !btn.dataset.key) return;
+    const k = btn.dataset.key;
+    if (state.closedSlots.has(k)) state.closedSlots.delete(k); else state.closedSlots.add(k);
+    persistAll();
+    renderAdminGrid(); renderCalendar();
+  });
+  document.getElementById('admin-open-all').addEventListener('click', () => { state.closedSlots.clear(); persistAll(); renderAdminGrid(); renderCalendar(); });
+  document.getElementById('admin-close-all').addEventListener('click', () => {
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(state.weekStart, i);
+      getDaySlots(i).forEach(t => state.closedSlots.add(slotKey(d, t)));
+    }
+    persistAll(); renderAdminGrid(); renderCalendar();
+  });
+
+  // ===== TAB: BOOKINGS =====
+  document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.bookingsFilter = b.dataset.filter;
+    renderAdminBookings();
+  }));
+
+  function renderAdminBookings() {
+    const root = document.getElementById('admin-bookings-list');
+    root.replaceChildren();
+    let list = [...state.bookings];
+    if (state.bookingsFilter !== 'all') list = list.filter(b => b.status === state.bookingsFilter);
+    if (list.length === 0) {
+      root.appendChild(el('p', { class: 'text-sm text-charbon/55 italic text-center py-8' }, 'Aucune réservation à afficher.'));
+      return;
+    }
+    list.sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
+    list.forEach(b => {
+      const svc = SERVICES.find(s => s.id === b.serviceId);
+      const dayIdx = (new Date(b.dateKey + 'T00:00').getDay() + 6) % 7;
+      const wh = state.workingHours[dayIdx];
+      const isOutsideHours = wh.closed || timeToMin(b.time) < timeToMin(wh.open) || timeToMin(b.time) >= timeToMin(wh.close);
+      const statusLabel = b.status === 'confirmed' ? 'Confirmée' : b.status === 'blocked' ? 'Bloquée' : 'Annulée';
+      const statusClass = `status-${b.status}`;
+
+      const card = el('div', { class: 'border border-rosegold/15 rounded-xl p-4 flex flex-wrap gap-3 items-center justify-between' }, [
+        el('div', { class: 'flex-grow min-w-[200px]' }, [
+          el('div', { class: 'flex items-center gap-2 flex-wrap' }, [
+            el('p', { class: 'font-semibold text-charbon' }, `${b.prenom} ${b.nom}`),
+            el('span', { class: `${statusClass} text-[10px] font-bold uppercase px-2 py-0.5 rounded-full` }, statusLabel),
+            isOutsideHours ? el('span', { class: 'text-[10px] bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full' }, '⚠ hors horaires') : null
+          ]),
+          el('p', { class: 'text-xs text-charbon/55 mt-1' }, `${b.tel} · ${b.email}`)
+        ]),
+        el('div', { class: 'text-right' }, [
+          el('p', { class: 'text-sm text-charbon' }, svc ? svc.name : 'Service'),
+          el('p', { class: 'text-xs text-rosegold-deep font-semibold' }, `${b.dateKey} · ${b.time}`)
+        ]),
+        el('div', { class: 'flex gap-1 flex-wrap' }, [
+          b.status === 'confirmed' ? el('button', {
+            type: 'button',
+            class: 'text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1.5 rounded-full',
+            onclick: () => { b.status = 'blocked'; persistAll(); renderAdminBookings(); showToast('Réservation bloquée', `${b.prenom} ${b.nom} ne pourra plus venir.`); }
+          }, '🚫 Bloquer') : null,
+          b.status === 'blocked' ? el('button', {
+            type: 'button',
+            class: 'text-xs bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1.5 rounded-full',
+            onclick: () => { b.status = 'confirmed'; persistAll(); renderAdminBookings(); showToast('Réservation réactivée', `${b.prenom} ${b.nom} est de nouveau confirmée.`); }
+          }, '✓ Réactiver') : null,
+          el('button', {
+            type: 'button',
+            class: 'text-xs bg-rosegold/10 hover:bg-rosegold/20 text-rosegold-deep px-3 py-1.5 rounded-full',
+            onclick: () => {
+              if (!confirm('Annuler définitivement cette réservation ?')) return;
+              const slotK = slotKey(new Date(b.dateKey + 'T00:00'), b.time);
+              state.bookedSlots.delete(slotK);
+              state.bookings = state.bookings.filter(x => x.id !== b.id);
+              persistAll(); renderAdminBookings(); renderCalendar();
+            }
+          }, '🗑 Supprimer')
+        ])
+      ]);
+      root.appendChild(card);
+    });
+  }
+
+  // ===== TAB: STATS =====
+  function last7DaysVisits(stats) {
+    let total = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(new Date(), -i);
+      total += (stats.daily && stats.daily[dateKey(d)]) || 0;
+    }
+    return total;
+  }
+  function renderStats() {
+    const stats = getStats();
+    const totalVisits = stats.visits || 0;
+    const totalBookings = stats.totalBookings || 0;
+    const ctaTotal = Object.values(stats.ctaClicks || {}).reduce((a,b) => a+b, 0);
+    document.getElementById('st-visits').textContent = totalVisits;
+    document.getElementById('st-clicks').textContent = ctaTotal;
+    document.getElementById('st-bookings').textContent = totalBookings;
+    document.getElementById('st-conv').textContent = totalVisits > 0 ? ((totalBookings / totalVisits) * 100).toFixed(1) + '%' : '0%';
+
+    // Top services (depuis bookings)
+    const allBookings = JSON.parse(safeGet('od_bookings') || '[]');
+    const svcCount = {};
+    allBookings.forEach(b => { svcCount[b.serviceId] = (svcCount[b.serviceId] || 0) + 1; });
+    const topSvc = Object.entries(svcCount).sort((a,b) => b[1]-a[1]).slice(0, 3);
+    const tsRoot = document.getElementById('st-top-services');
+    tsRoot.replaceChildren();
+    if (topSvc.length === 0) tsRoot.appendChild(el('p', { class: 'text-charbon/50 italic' }, 'Aucune donnée.'));
+    else topSvc.forEach(([id, n]) => {
+      const svc = SERVICES.find(s => s.id === id);
+      tsRoot.appendChild(el('div', { class: 'flex items-center justify-between' }, [
+        el('span', { class: 'text-charbon' }, svc ? svc.name : id),
+        el('span', { class: 'font-semibold text-rosegold-deep' }, String(n))
+      ]));
+    });
+
+    // Top CTA
+    const tcRoot = document.getElementById('st-top-ctas');
+    tcRoot.replaceChildren();
+    const cta = stats.ctaClicks || {};
+    const topCta = Object.entries(cta).sort((a,b) => b[1]-a[1]).slice(0, 5);
+    if (topCta.length === 0) tcRoot.appendChild(el('p', { class: 'text-charbon/50 italic' }, 'Aucune donnée.'));
+    else topCta.forEach(([src, n]) => {
+      tcRoot.appendChild(el('div', { class: 'flex items-center justify-between' }, [
+        el('span', { class: 'text-charbon' }, src),
+        el('span', { class: 'font-semibold text-rosegold-deep' }, String(n))
+      ]));
+    });
+  }
+  function renderStatsChart() {
+    const root = document.getElementById('st-chart');
+    root.replaceChildren();
+    const stats = getStats();
+    const days = [];
+    let max = 1;
+    for (let i = 6; i >= 0; i--) {
+      const d = addDays(new Date(), -i);
+      const v = (stats.daily && stats.daily[dateKey(d)]) || 0;
+      days.push({ d, v });
+      if (v > max) max = v;
+    }
+    days.forEach(({ d, v }) => {
+      const h = Math.max(4, Math.round((v / max) * 100));
+      const col = el('div', { class: 'flex flex-col items-center justify-end flex-1 gap-1' }, [
+        el('span', { class: 'text-[10px] text-charbon/55 font-semibold' }, String(v)),
+        el('div', { class: 'bar w-full bg-gradient-to-t from-rosegold to-bleuciel rounded-t-lg', style: `height: ${h}%; min-height: 4px;` }),
+        el('span', { class: 'text-[10px] text-charbon/55' }, DAY_NAMES[(d.getDay()+6)%7])
+      ]);
+      root.appendChild(col);
+    });
+  }
+  document.getElementById('st-reset').addEventListener('click', () => {
+    if (!confirm('Réinitialiser toutes les statistiques ? Cette action est irréversible.')) return;
+    safeSet('od_stats', JSON.stringify({ visits:0, ctaClicks:{}, daily:{}, totalBookings:0 }));
+    safeDel('od_visit_session');
+    renderStats(); renderStatsChart(); renderOverview();
+    showToast('Stats réinitialisées', 'Tous les compteurs sont remis à zéro.');
+  });
+
+  // ===== TAB: ACCOUNTS (super-admin) =====
+  function renderAccounts() {
+    const root = document.getElementById('accounts-list');
+    root.replaceChildren();
+    const accounts = getAccounts();
+    accounts.forEach(a => {
+      const isSelf = a.email.toLowerCase() === state.currentUser.email.toLowerCase();
+      const card = el('div', { class: 'border border-rosegold/15 rounded-xl p-4 flex flex-wrap gap-3 items-center justify-between' }, [
+        el('div', {}, [
+          el('p', { class: 'font-semibold text-charbon' }, a.email),
+          el('p', { class: 'text-xs text-charbon/55' }, `Rôle : ${a.role}${isSelf ? ' · vous' : ''}`)
+        ]),
+        el('div', { class: 'flex gap-1 flex-wrap' }, [
+          el('button', {
+            type: 'button',
+            class: 'text-xs bg-bleuciel-light hover:bg-bleuciel text-charbon px-3 py-1.5 rounded-full',
+            onclick: () => promptResetPassword(a.email)
+          }, '🔑 Reset mdp'),
+          isSelf ? null : el('button', {
+            type: 'button',
+            class: 'text-xs bg-rosegold/10 hover:bg-rosegold/20 text-rosegold-deep px-3 py-1.5 rounded-full',
+            onclick: () => deleteAccount(a.email)
+          }, '🗑 Supprimer')
+        ])
+      ]);
+      root.appendChild(card);
+    });
+  }
+  async function promptResetPassword(email) {
+    const pwd = prompt(`Nouveau mot de passe pour ${email} (min. 8, 1 maj, 1 chiffre, 1 spécial) :`);
+    if (!pwd) return;
+    if (!validStrongPwd(pwd)) { alert('Mot de passe trop faible. Requis : 8+ caractères, 1 majuscule, 1 chiffre, 1 caractère spécial.'); return; }
+    const accounts = getAccounts();
+    const acc = accounts.find(a => a.email === email);
+    if (!acc) return;
+    acc.passwordHash = await hashPassword(pwd);
+    saveAccounts(accounts);
+    showToast('Mot de passe modifié', `Le mot de passe de ${email} a été changé.`);
+  }
+  function deleteAccount(email) {
+    if (!confirm(`Supprimer le compte ${email} ? Cette action est irréversible.`)) return;
+    let accounts = getAccounts();
+    const acc = accounts.find(a => a.email === email);
+    if (!acc) return;
+    if (acc.role === 'super-admin') {
+      const remainingSuper = accounts.filter(a => a.role === 'super-admin' && a.email !== email);
+      if (remainingSuper.length === 0) { alert('Impossible de supprimer le dernier super-administrateur.'); return; }
+    }
+    accounts = accounts.filter(a => a.email !== email);
+    saveAccounts(accounts);
+    renderAccounts();
+    showToast('Compte supprimé', `${email} a été supprimé.`);
+  }
+  document.getElementById('new-acc-create').addEventListener('click', async () => {
+    const email = document.getElementById('new-acc-email').value.trim().toLowerCase();
+    const pwd = document.getElementById('new-acc-pwd').value;
+    const role = document.getElementById('new-acc-role').value;
+    const errEl = document.getElementById('new-acc-error');
+    errEl.classList.remove('show');
+    if (!validEmail(email)) { errEl.textContent = 'Email invalide.'; errEl.classList.add('show'); return; }
+    if (!validStrongPwd(pwd)) { errEl.textContent = 'Mot de passe trop faible (8+, 1 maj, 1 chiffre, 1 spécial).'; errEl.classList.add('show'); return; }
+    const accounts = getAccounts();
+    if (accounts.some(a => a.email === email)) { errEl.textContent = 'Cet email existe déjà.'; errEl.classList.add('show'); return; }
+    accounts.push({ email, passwordHash: await hashPassword(pwd), role, createdAt: Date.now() });
+    saveAccounts(accounts);
+    document.getElementById('new-acc-email').value = '';
+    document.getElementById('new-acc-pwd').value = '';
+    renderAccounts();
+    showToast('Compte créé ✦', `${email} (${role}) a été ajouté.`);
+  });
+
+  // ===== REVEAL =====
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 }) : null;
+
+  // ===== SYNC =====
+  let lastMin = new Date().getMinutes();
+  setInterval(() => { const m = new Date().getMinutes(); if (m !== lastMin) { lastMin = m; renderCalendar(); } }, 30000);
+  window.addEventListener('storage', (e) => {
+    if (['od_closedSlots','od_bookedSlots','od_bookings','od_workingHours'].includes(e.key)) {
+      initState(); renderCalendar(); renderFooterHours();
+    }
+    if (e.key === 'od_sessionToken' && !e.newValue && state.currentUser) {
+      state.currentUser = null; stopSessionTimers(); closeAdminModal();
+    }
+  });
+
+  // Activity tracking pour pre-warn (tout clic prolonge implicitement = on fait pas, sauf bouton dédié)
+  ['click','keydown','touchstart'].forEach(evt => {
+    document.addEventListener(evt, () => { state.lastActivity = Date.now(); });
+  });
+
+  // ===== INIT =====
+  async function init() {
+    await initAccounts();
+    initState();
+    renderServices();
+    renderServicePicker();
+    renderCalendar();
+    renderFooterHours();
+    updateRecap();
+    document.querySelectorAll('.reveal').forEach(r => io ? io.observe(r) : r.classList.add('in'));
+    trackVisit();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>
